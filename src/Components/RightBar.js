@@ -3,8 +3,6 @@ import ScoreDisplay from './ScoreDisplay'
 
 const RightBar = ({ name, score }) => {
 
-
-
     return (
         <div className="right-bar">
             <div className="coin-display">I WOULD BE A COIN TYPE</div>

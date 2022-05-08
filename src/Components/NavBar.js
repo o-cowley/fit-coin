@@ -2,8 +2,6 @@ import React from 'react'
 
 
 const NavBar = ({ showLogin, logInOut}) => {
-
-
     return (
         <nav className='navbar'>
             <div className="container">
