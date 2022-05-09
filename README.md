@@ -1,3 +1,16 @@
+This is the ongiong work of an app that allows users to get a score based on how accurate they can be to a selection of poses.
+It uses the MediaPipe motion tracking app to track the various body points.
+
+In Progress: 
+A user earns a score based on comparison to a "perfect" pose that will be stored in the program.
+There are more than one position that can be selected on the bar
+
+Ongoing work:
+A person's score will be saved on a local JSON server backend and password protected with json-server-auth
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
