@@ -1,7 +1,13 @@
 const asyncHandler = require('express-async-handler')
 
+const Score = require('../models/scoresModel')
+
+
 const getScores = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: "Get scores" })
+    const scores = await Score.find()
+
+
+    res.status(200).json(scores)
 })
 
 const setScores = asyncHandler(async (req, res) => {
