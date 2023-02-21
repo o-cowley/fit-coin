@@ -1,24 +1,34 @@
-import React from 'react'
+import "./Component_Styling/ControlBar.css"
+
 import { Button, Card } from 'react-bootstrap'
 import logo from "../Images/logo.svg"
 import ButtonBar from './ButtonBar'
+import { CircledButton } from "./SpecialButtons"
 
-function ControlBar() {
+
+function ControlBar({changeGame, resetScore, setScore}) {
   return (
-    <div className='card'>
-      <Card style={{width:"100%"}}>
-        <Card.Header>Tis is a header</Card.Header>
-        <Card.Body style={{ textAlign: "center" }}>
+    <div className='card-container'>
+      
+      <Card className="card">
+        <Card.Header className="header">Play the game</Card.Header>
+        <Card.Body>
           <Card.Img variant="top" src={logo} />
-          <Card.Title>The Demo Card</Card.Title>
+          <Card.Title>The Bullseye Game</Card.Title>
           <Card.Text>
-            This is some text for the Card, it is where I could put a description
+            Click the Bullseye to score points!
           </Card.Text>
-          <Button variant="secondary">This is where you would select</Button>
+          
+          <CircledButton buttonPress={changeGame} text="Change the Bullseye"/>
+          
         </Card.Body>
-        <Card.Footer>Tis is a footer</Card.Footer>
+        {/* <Card.Footer>Tis is a footer</Card.Footer> */}
       </Card>
-      <ButtonBar />
+      
+      <div className='end'>
+        <ButtonBar resetScore={resetScore} setScore={setScore}/>
+      </div>
+      
 
     </div>
   )

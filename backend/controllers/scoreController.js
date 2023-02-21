@@ -1,36 +1,103 @@
 const asyncHandler = require('express-async-handler')
 
-const Score = require('../models/scoresModel')
+const Score = require('../models/scoreModel')
+const User = require('../models/userModel')
 
 
-const getScores = asyncHandler(async (req, res) => {
-    const scores = await Score.find()
 
-
+// @desc:       Get all of the users (will get specific user after authentication)
+// @route:      GET /api/goals
+// @access:     private (eventually)
+const getHighscores = asyncHandler(async (req, res) => {
+    const scores = await Score.find({ user: req.user.id })
     res.status(200).json(scores)
 })
 
-const setScores = asyncHandler(async (req, res) => {
-    if (!req.body.text) {
-        res.status(400)
-        throw new Error('Please add a text field')
+
+// @desc:       Add a user
+// @route:      PUT /api/goals
+// @access:     private (eventually)
+const addHighscore = asyncHandler(async (req, res) => {
+    // if (!req.body.name) {
+    //     res.status(400)
+    //     throw new Error('Please add a name')
+    // }
+
+    const newHighScore = await Score.create({
+        user: req.user.id,
+        gameType: req.body.game,
+        highScore: req.body.score
+    })
+
+    res.status(200).json(newHighScore)
+})
+
+
+// @desc:       Update a user
+// @route:      POST /api/goals
+// @access:     private (eventually)
+const updateHighscore = asyncHandler(async (req, res) => {
+    const score = await Score.findById(req.params.id);
+
+    if (!score) {
+        res.status(400);
+        throw new Error('Score not found')
     }
-    res.status(200).json({ message: "Set scores" })
+    
+    const user = await User.findById(req.user.id)
+
+    // Check if the user exists
+    if (!user) {
+        res.status(401)
+        throw new Error('User not found')
+    }
+
+    // Make sure that you can only update the logged in user's own things
+    if (score.user.toString() != user.id) {
+        res.status(401)
+        throw new Error('User not authorized')
+    }
+
+    const updatedScore = await User.findByIdAndUpdate(req.params.id, {highScore: req.body.newscore}, {new: true})
+
+    res.status(200).json(updatedScore)
 })
 
-const updateScore = asyncHandler(async (req, res) => {
 
-    res.status(200).json({ message: `Updated score ${req.params.id}` })
+// @desc:       Delete a specific user
+// @route:      DELETE /api/goals
+// @access:     private (eventually)
+const deleteScore = asyncHandler(async (req, res) => {
+
+    const score = await Score.findById(req.params.id);
+
+    if (!score) {
+        res.status(400);
+        throw new Error('Score not found')
+    }
+
+    const user = await User.findById(req.user.id)
+
+    // Check if the user exists
+    if (!user) {
+        res.status(401)
+        throw new Error('User not found')
+    }
+
+    // Make sure that you can only update the logged in user's own things
+    if (score.user.toString() != user.id) {
+        res.status(401)
+        throw new Error('User not authorized')
+    }
+
+    await score.remove()
+    res.status(200).json({ id: req.params.id })
 })
-
-const deleteUser = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: `Deleted id ${req.params.id}` })
-})
-
 
 module.exports = {
-    getScores,
-    setScores,
-    updateScore,
-    deleteUser,
+    getHighscores,
+    addHighscore,
+    updateHighscore,
+    deleteScore,
 }
+

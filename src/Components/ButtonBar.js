@@ -1,17 +1,19 @@
-import React from 'react'
-import { Button, Stack } from 'react-bootstrap'
-import ControlButton from './ControlButton'
+import { Stack } from 'react-bootstrap'
+// import ControlButton from './ControlButton'
+import { SwipeButton } from './SpecialButtons';
 
-function ButtonBar() {
+function ButtonBar({resetScore, setScore}) {
+  const jumpScore = () => {
+    setScore(100);
+  }
+
   return (
     <div style={{
         width: "100%"
       }}>
-        <Stack gap={2}>
-            <Button variant="outline-primary">Outline-Primary</Button>{' '}
-            <ControlButton text="LOOK AT ME" variant="outline-danger"/>
-            <ControlButton text="ANOTHER" variant="outline-secondary"/>
-            <ControlButton text="Yay"/>
+        <Stack gap={3 }>
+            <SwipeButton text="Give me 100" buttonPress={jumpScore}/>
+            <SwipeButton text="Reset Game" buttonPress={resetScore}/>
         </Stack>
     </div>
   )

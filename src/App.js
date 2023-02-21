@@ -1,23 +1,50 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Components/component.css'
-import VideoFeed from "./Components/VideoFeed";
+
 import React, { useState } from "react";
+
 import ControlBar from "./Components/ControlBar";
 import NavBar from './Components/NavBar';
-import RightBar from './Components/RightBar';
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row/'
-import Col from 'react-bootstrap/Col/'
-import LoginPage from './Components/LoginPage';
+import UserDataBar from './Components/UserDataBar';
+import Bullseye from './Components/Bullseye';
+
+import { SwipeButton, GlowButton, CircledButton } from './Components/SpecialButtons';
+
+// import { set } from 'mongoose';
+// import VideoFeed from "./Components/VideoFeed";
+// import LoginPage from './Components/LoginPage';
 
 
 
 function App() {
 
-  const [token, setToken] = useState(true);
+  const [login, setLogin] = useState(true);
+
+  const [playerScore, setCurrentScore] = useState(0);
+  const [gameStyle, setGameStyle] = useState(true);
+  const [ready, setReady] = useState(false)
+
+  function scorePoints(p) {
+    setCurrentScore(prevState => prevState + p);
+  }
+
+  function resetGame() {
+    setCurrentScore(0);
+    setReady(false)
+  }
 
   function toClick() {
+
     console.log("CLICK");
+    setLogin(!login);
+  }
+
+  const readyToPlay = () => {
+    setReady(prevState => {return !prevState});
+  }
+
+  function changeGameShape() {
+    setGameStyle(prevState => !prevState);
   }
 
   const scores = [
@@ -28,30 +55,30 @@ function App() {
     {
       'name': "GAME2",
       'score': 100
-    },
-    {
-      'name': "FUNNY GAME",
-      'score': 100
     }
   ]
   return (
-    <div>
-      <NavBar logInOut={toClick} showLogin={true} />
-      <div className="main-page">
-        <Container>
-          <Row>
-            <Col>
-              <ControlBar />
-            </Col>
-            <Col>
-              <div className="test-middle"><VideoFeed /></div>
-            </Col>
-            <Col>
-              <RightBar name="Oliver" score={scores} />
-            </Col>
-          </Row>
-        </Container>
+    <div className='grid-container'>
+      <NavBar className='header' logInOut={toClick} showLogin={login} />
+      
+      <ControlBar className='control-panel' changeGame={changeGameShape} resetScore={resetGame} setScore={scorePoints}/>
+    
+      <div className={ready ? 'game-panel' : "game-panel add-blue"}>
+
+        {ready ? 
+          <Bullseye addScore={scorePoints} score={playerScore} shapeType={gameStyle ? 'circle' : 'square'}/> :
+          <div className='display-grid'>
+            <GlowButton buttonPress={readyToPlay} text='Press Me to Play'/>
+          </div>}      
+
       </div>
+
+      
+    
+      <UserDataBar className='score-bar' name="Oliver" score={scores} currentScore={playerScore}/>
+
+      <div className='footer'>A footer eh? This little game was made (and remade and remade again) by Oliver Cowley</div>
+
       {/* <LoginPage /> */}
     </div>
   )
