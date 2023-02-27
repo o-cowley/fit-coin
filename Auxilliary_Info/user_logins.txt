@@ -1,29 +1,4 @@
-const mongoose = require("mongoose");
-
-const userSchema = mongoose.Schema(
-	{
-		name: {
-			type: String,
-			required: true,
-		},
-		email: {
-			type: String,
-			required: [true, "Please add an email"],
-			unique: true,
-		},
-		password: {
-			type: String,
-			required: [true, "Please add an email"],
-		},
-	},
-	{
-		timestamps: true,
-	}
-);
-
-module.exports = mongoose.model("User", userSchema);
-
-// Some login stuff:
+Some login stuff:
 // email asdef
 // password asd
 // token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjNmNTVlYzgwZGNjOGI2Nzg4NjVkNiIsImlhdCI6MTY3Njk0NDYyNiwiZXhwIjoxNjc5NTM2NjI2fQ.fvNP6Z_BF0eWHDmXS8nYjvzSAQsAdGGGwbQvkYQ3uus
@@ -35,3 +10,6 @@ module.exports = mongoose.model("User", userSchema);
 // tim@tim.tim
 // 12345
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjUyOTI3NGQyMGExNjZlZTdhMTZmMiIsImlhdCI6MTY3NzAxNDAwNCwiZXhwIjoxNjc5NjA2MDA0fQ.XsZzzOoVrZZMDuqr34ChNyOKtQsGdg8i3VYTcCxAntA
+
+oo@oo.oo
+asd

@@ -25,10 +25,10 @@
   },
   "scripts": {
     "start": "node backend/server.js",
-    "server": "nodemon backend/server.js",
-    "client" : "npm start --prefix frontend",
+    "server": "node backend/server.js",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "start-original": "react-scripts start",
-
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -52,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "concurrently": "^7.6.0",
     "nodemon": "^2.0.16"
   }
 }
